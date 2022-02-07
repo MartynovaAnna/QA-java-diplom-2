@@ -1,8 +1,8 @@
 public class UserRegisterResponse {
-      private boolean success;
-       private String accessToken;
-       private String refreshToken;
-       private User user;
+    private boolean success;
+    private String accessToken;
+    private String refreshToken;
+    private User user;
 
     public boolean isSuccess() {
         return success;

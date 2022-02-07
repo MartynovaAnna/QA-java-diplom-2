@@ -1,8 +1,12 @@
 import io.qameta.allure.Step;
+import io.restassured.response.Response;
 import org.apache.commons.lang3.RandomStringUtils;
 
-public class UserWithoutPassword {
+import static io.restassured.RestAssured.given;
 
+public class UserWithoutPassword extends RestAssuredUser {
+
+    private static final String USER_PATH = "api/auth/register/";
     public static final String EMAIL_POSTFIX = "@yandex.ru";
 
     public final String email;
@@ -18,5 +22,15 @@ public class UserWithoutPassword {
         final String email = RandomStringUtils.randomAlphabetic(10) + EMAIL_POSTFIX;;
         final String name = RandomStringUtils.randomAlphabetic(10);
         return new UserWithoutPassword(email, name);
+    }
+
+    @Step("Create new user without password")
+    public Response createNewUserWithoutPassword(UserWithoutPassword user) {
+        Response response = given()
+                .spec(getBaseSpecification())
+                .body(user)
+                .when()
+                .post(USER_PATH);
+        return response;
     }
 }
